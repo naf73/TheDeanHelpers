@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TheDeanHelpers.Model;
 
 namespace IntegratedTestTheDeanHelpers
 {
@@ -9,6 +10,17 @@ namespace IntegratedTestTheDeanHelpers
         [TestMethod]
         public void TestMethod1()
         {
+        }
+
+        private CSVFile CreateDoc()
+        {
+            CSVFile doc = new CSVFile();
+
+            Random rnd = new Random();
+
+            
+
+            return doc;
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace TheDeanHelpers.Model
 {
-    internal class Row
+    public class Row
     {
         private List<Cell> _cells;
 

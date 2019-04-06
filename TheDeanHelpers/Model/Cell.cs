@@ -1,6 +1,6 @@
 ﻿namespace TheDeanHelpers.Model
 {
-    internal class Cell
+    public class Cell
     {
         public int ColumnId { get; set; }
         public int RowId { get; set; }
