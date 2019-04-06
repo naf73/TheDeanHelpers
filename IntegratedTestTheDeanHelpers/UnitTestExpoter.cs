@@ -8,17 +8,20 @@ namespace IntegratedTestTheDeanHelpers
     public class UnitTestExpoter
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestMethodExportToFileXLSX()
         {
+
+
         }
 
         private CSVFile CreateDoc()
         {
+            int columnsCount = 3;
+            int rowsCount = 10;
             CSVFile doc = new CSVFile();
-
             Random rnd = new Random();
 
-            for (int i = 0; i < rnd.Next(3,10); i++)
+            for (int i = 0; i < columnsCount; i++)
             {
                 doc.Columns.Add(new Column()
                 {
@@ -28,15 +31,23 @@ namespace IntegratedTestTheDeanHelpers
                 });
             }
 
-            for (int i = 0; i < rnd.Next(20,100); i++)
+            for (int j = 0; j < rowsCount; j++)
             {
-                Row row = new Row();
+                Row row = new Row()
+                {
+                    Id = j
+                };
+                int i = 0;
                 foreach(var column in doc.Columns)
                 {
-                    // -- To Do
+                    row.Cells.Add(new Cell()
+                    {
+                        ColumnId = i,
+                        RowId = j,
+                        Value = string.Format("Значение ({0} {1})", i, j)
+                    });
                 }
-
-
+                doc.Rows.Add(row);
             }
 
             return doc;
