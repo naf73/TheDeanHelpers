@@ -7,9 +7,9 @@ using TheDeanHelpers.Model;
 
 namespace TheDeanHelpers
 {
-    public static class Parser
+    public  class Parser
     {
-        public static CSVFile doc = new CSVFile();
+        private  CSVFile doc = new CSVFile();
 
         
     }
