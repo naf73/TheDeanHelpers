@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Rabbits\test.csv" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TheDeanHelpers\TheDeanHelpers.csproj">
