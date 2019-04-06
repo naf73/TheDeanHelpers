@@ -26,7 +26,7 @@ namespace TheDeanHelpers
 
                 Sheets sheets = workbookPart.Workbook.AppendChild(new Sheets());
 
-                Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Sheet" };
+                Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Sheet_1" };
 
                 sheets.Append(sheet);
 
@@ -36,13 +36,16 @@ namespace TheDeanHelpers
 
                 #region Заголовок
 
-                SheetRow rangeDates = new SheetRow();
+                SheetRow Headers = new SheetRow();
 
                 foreach (var column in doc.Columns)
                 {
-                    rangeDates.Append(ConstructCell(column.Name, CellValues.String));
+                    if (column.IsActive)
+                    {
+                        Headers.Append(ConstructCell(column.Name, CellValues.String));
+                    }
                 }
-                sheetData.AppendChild(rangeDates);               
+                sheetData.AppendChild(Headers);               
 
                 #endregion
 
@@ -52,7 +55,13 @@ namespace TheDeanHelpers
                 {
                     SheetRow sheetRow = new SheetRow();
 
-                    //sheetRow.Append(ConstructCell(row.Cells[], CellValues.Number));
+                    foreach (var column in doc.Columns)
+                    {
+                        if (column.IsActive)
+                        {
+                            sheetRow.Append(ConstructCell((row.Cells.Find(c => c.ColumnId == column.Id)).Value, CellValues.Number));
+                        }
+                    }
 
                     sheetData.Append(sheetRow);
                 }
