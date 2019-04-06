@@ -20,9 +20,48 @@ namespace TheDeanHelpers
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Variables
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Конструктор формы
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Событие нажатия кнопки "Открыть CSV-файл"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenCSV_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Событие нажатия кнопки "Экспорт XLS-файл"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExportXLS_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        #region Methods
+
+        #endregion
     }
 }

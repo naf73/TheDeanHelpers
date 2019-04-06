@@ -5,8 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TheDeanHelpers"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="MainButton" TargetType="Button">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="OpenCSV" Content="Open CSV" Style="{StaticResource MainButton}" Click="OpenCSV_Click"/>
+            <Button x:Name="ExportXLS" Content="Export XLS" Style="{StaticResource MainButton}" Click="ExportXLS_Click"/>
+        </StackPanel>
+
+        <DataGrid x:Name="DataGrid" 
+                          Grid.Row="1"
+                          Margin="5"
+                          SelectionUnit="CellOrRowHeader"
+                          SelectionMode="Extended"
+                          Background="{x:Null}"
+                          AutoGenerateColumns="True"
+                          HorizontalGridLinesBrush="DarkGray" 
+                          RowBackground="LightGray" 
+                          AlternatingRowBackground="White">            
+        </DataGrid>
+
     </Grid>
 </Window>
