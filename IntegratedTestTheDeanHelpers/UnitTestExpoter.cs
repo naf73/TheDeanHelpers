@@ -14,7 +14,7 @@ namespace IntegratedTestTheDeanHelpers
         {
             #region Arrange
 
-            string pathFile = Path.Combine(Path.GetTempPath(), "test.xls");
+            string pathFile = Path.Combine(Path.GetTempPath(), "test.xlsx");
             CSVFile doc = CreateDoc();
             Expoter expoter = new Expoter();
 
@@ -42,7 +42,7 @@ namespace IntegratedTestTheDeanHelpers
         private CSVFile CreateDoc()
         {
             int columnsCount = 3;
-            int rowsCount = 10;
+            int rowsCount = 30;
             CSVFile doc = new CSVFile();
             Random rnd = new Random();
 

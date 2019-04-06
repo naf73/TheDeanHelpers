@@ -59,7 +59,7 @@ namespace TheDeanHelpers
                     {
                         if (column.IsActive)
                         {
-                            sheetRow.Append(ConstructCell((row.Cells.Find(c => c.ColumnId == column.Id)).Value, CellValues.Number));
+                            sheetRow.Append(ConstructCell((row.Cells.Find(c => c.ColumnId == column.Id)).Value, CellValues.String));
                         }
                     }
 
