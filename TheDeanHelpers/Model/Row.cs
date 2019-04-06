@@ -8,6 +8,6 @@ namespace TheDeanHelpers.Model
 
         public int Id { get; set; }
 
-        internal List<Cell> Cells { get => _cells; set => _cells = value; }
+        public List<Cell> Cells { get; set; }
     }
 }
