@@ -40,7 +40,7 @@ namespace TheDeanHelpers
                     {
                         Row r = new Row()
                         {
-                            Id = 0
+                            Id = countRow
                         };
                         int countWord = 0;                        
                         foreach (var word in line.Split(';'))
