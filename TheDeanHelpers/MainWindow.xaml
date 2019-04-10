@@ -32,7 +32,7 @@
                           AutoGenerateColumns="True"
                           HorizontalGridLinesBrush="DarkGray" 
                           RowBackground="LightGray" 
-                          AlternatingRowBackground="White">            
+                          AlternatingRowBackground="White" SelectionChanged="DataGrid_SelectionChanged">            
         </DataGrid>
 
     </Grid>

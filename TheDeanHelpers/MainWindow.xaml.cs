@@ -63,5 +63,10 @@ namespace TheDeanHelpers
         #region Methods
 
         #endregion
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
