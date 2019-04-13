@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TheDeanHelpers.Model;
 
 namespace TheDeanHelpers
 {
@@ -21,6 +23,14 @@ namespace TheDeanHelpers
     public partial class MainWindow : Window
     {
         #region Variables
+
+        
+        Parser parser = new Parser();
+        CSVFile doc = new CSVFile();
+        ExportXLS xdox = new ExportXLS();
+        Exporter exporter = new Exporter();
+
+
 
         #endregion
 
@@ -45,9 +55,12 @@ namespace TheDeanHelpers
         /// <param name="e"></param>
         private void OpenCSV_Click(object sender, RoutedEventArgs e)
         {
-
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                doc = parser.Download(openFileDialog.FileName);
+            }
         }
-
         /// <summary>
         /// Событие нажатия кнопки "Экспорт XLS-файл"
         /// </summary>
@@ -55,6 +68,11 @@ namespace TheDeanHelpers
         /// <param name="e"></param>
         private void ExportXLS_Click(object sender, RoutedEventArgs e)
         {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                xdox = exporter.ExportToFileXLSX(saveFileDialog.FileName);
+            }
 
         }
 

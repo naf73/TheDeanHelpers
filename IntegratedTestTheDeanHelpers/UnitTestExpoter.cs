@@ -16,7 +16,7 @@ namespace IntegratedTestTheDeanHelpers
 
             string pathFile = Path.Combine(Path.GetTempPath(), "test.xlsx");
             CSVFile doc = CreateDoc();
-            Expoter expoter = new Expoter();
+            Exporter expoter = new Exporter();
 
             #endregion
 

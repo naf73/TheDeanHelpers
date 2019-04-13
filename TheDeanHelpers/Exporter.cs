@@ -12,7 +12,7 @@ using CSVRow = TheDeanHelpers.Model.Row;
 
 namespace TheDeanHelpers
 {
-    public class Expoter
+    public class Exporter
     {
         public void ExportToFileXLSX(string pathFile, CSVFile doc)
         {
@@ -70,6 +70,11 @@ namespace TheDeanHelpers
 
                 workbookPart.Workbook.Save();
             }
+        }
+
+        internal ExportXLS ExportToFileXLSX(object file)
+        {
+            throw new NotImplementedException();
         }
 
         #region Methods
