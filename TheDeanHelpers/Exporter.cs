@@ -72,11 +72,6 @@ namespace TheDeanHelpers
             }
         }
 
-        internal ExportXLS ExportToFileXLSX(object file)
-        {
-            throw new NotImplementedException();
-        }
-
         #region Methods
 
         private DocumentFormat.OpenXml.Spreadsheet.Cell ConstructCell(string value, CellValues dataType)

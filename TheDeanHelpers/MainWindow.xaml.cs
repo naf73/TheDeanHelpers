@@ -27,7 +27,7 @@ namespace TheDeanHelpers
         
         Parser parser = new Parser();
         CSVFile doc = new CSVFile();
-        ExportXLS xdox = new ExportXLS();
+       
         Exporter exporter = new Exporter();
 
 
@@ -71,7 +71,7 @@ namespace TheDeanHelpers
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             if (saveFileDialog.ShowDialog() == true)
             {
-                xdox = exporter.ExportToFileXLSX(saveFileDialog.FileName);
+                exporter.ExportToFileXLSX(saveFileDialog.FileName, doc);
             }
 
         }
