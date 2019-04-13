@@ -56,6 +56,8 @@ namespace TheDeanHelpers
         private void OpenCSV_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Filter = "CSV file|*.csv";
             if (openFileDialog.ShowDialog() == true)
             {
                 doc = parser.Download(openFileDialog.FileName);
@@ -69,6 +71,9 @@ namespace TheDeanHelpers
         private void ExportXLS_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Excel file|*.xls|Excel file|*.xlsx";
+           
+
             if (saveFileDialog.ShowDialog() == true)
             {
                 exporter.ExportToFileXLSX(saveFileDialog.FileName, doc);
