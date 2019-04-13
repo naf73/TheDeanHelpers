@@ -15,7 +15,7 @@ namespace IntegratedTestTheDeanHelpers
             #region Arrange
 
             string pathFile = Path.Combine(Path.GetTempPath(), "test.xlsx");
-            CSVFile doc = CreateDoc();
+            DataTable doc = CreateDoc();
             Expoter expoter = new Expoter();
 
             #endregion
@@ -39,11 +39,11 @@ namespace IntegratedTestTheDeanHelpers
             #endregion
         }
 
-        private CSVFile CreateDoc()
+        private DataTable CreateDoc()
         {
             int columnsCount = 3;
             int rowsCount = 30;
-            CSVFile doc = new CSVFile();
+            DataTable doc = new DataTable();
             Random rnd = new Random();
 
             for (int i = 0; i < columnsCount; i++)

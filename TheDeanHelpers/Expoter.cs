@@ -6,15 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TheDeanHelpers.Model;
-using SheetRow = DocumentFormat.OpenXml.Spreadsheet.Row;
-using CSVRow = TheDeanHelpers.Model.Row;
+using System.Data;
 
 namespace TheDeanHelpers
 {
     public class Expoter
     {
-        public void ExportToFileXLSX(string pathFile, CSVFile doc)
+        public void ExportToFileXLSX(string pathFile, System.Data.DataTable doc)
         {
             using (SpreadsheetDocument document = SpreadsheetDocument.Create(pathFile, SpreadsheetDocumentType.Workbook))
             {
@@ -33,37 +31,37 @@ namespace TheDeanHelpers
                 SheetData sheetData = worksheetPart.Worksheet.AppendChild(new SheetData());
 
                 worksheetPart.Worksheet.Save();
+                
+                #region Columns
 
-                #region Заголовок
+                Row Headers = new Row();
 
-                SheetRow Headers = new SheetRow();
-
-                foreach (var column in doc.Columns)
+                foreach (DataColumn column in doc.Columns)
                 {
-                    if (column.IsActive)
-                    {
-                        Headers.Append(ConstructCell(column.Name, CellValues.String));
-                    }
+                    Headers.Append(ConstructCell(column.ColumnName, CellValues.String));
                 }
                 sheetData.AppendChild(Headers);               
 
                 #endregion
 
-                #region Customers
+                #region Rows
 
-                foreach (var row in doc.Rows)
+                foreach (DataRow row in doc.Rows)
                 {
-                    SheetRow sheetRow = new SheetRow();
+                    Row sheetRow = new Row();
 
-                    foreach (var column in doc.Columns)
+                    foreach(string value in row.ItemArray)
                     {
-                        if (column.IsActive)
+                        if (!string.IsNullOrEmpty(value))
                         {
-                            sheetRow.Append(ConstructCell((row.Cells.Find(c => c.ColumnId == column.Id)).Value, CellValues.String));
+                            sheetRow.Append(ConstructCell(value, CellValues.String));
                         }
                     }
 
-                    sheetData.Append(sheetRow);
+                    if (sheetRow.Count() > 0)
+                    {
+                        sheetData.Append(sheetRow);
+                    }
                 }
 
                 #endregion

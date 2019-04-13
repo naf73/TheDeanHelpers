@@ -12,8 +12,8 @@ namespace UnitTestTheDeanHelpers
         {
             #region Arrange
 
-            CSVFile expectedCSVFile = new CSVFile();
-            CSVFile actualCSVFile = new CSVFile();
+            DataTable expectedCSVFile = new DataTable();
+            DataTable actualCSVFile = new DataTable();
 
             #endregion
 
@@ -29,8 +29,8 @@ namespace UnitTestTheDeanHelpers
         {
             #region Arrange
 
-            CSVFile expectedCSVFile = new CSVFile();
-            CSVFile actualCSVFile = new CSVFile();
+            DataTable expectedCSVFile = new DataTable();
+            DataTable actualCSVFile = new DataTable();
 
             #endregion
 

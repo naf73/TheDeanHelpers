@@ -18,8 +18,8 @@ namespace IntegratedTestTheDeanHelpers
             string pathDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             string pathFile = Path.Combine(Directory.GetParent(pathDir).Parent.FullName, "Rabbits", "test.csv");
             Parser parser = new Parser();
-            CSVFile expectedDoc = CreateDoc();
-            CSVFile actualDoc = new CSVFile();
+            DataTable expectedDoc = CreateDoc();
+            DataTable actualDoc = new DataTable();
 
             #endregion
 
@@ -46,7 +46,7 @@ namespace IntegratedTestTheDeanHelpers
             #endregion
         }
 
-        private void ShowCSVFile(CSVFile doc)
+        private void ShowCSVFile(DataTable doc)
         {
             Console.WriteLine("Path: {0}", doc.Path);
             string header = string.Empty;
@@ -67,13 +67,11 @@ namespace IntegratedTestTheDeanHelpers
             }
         }
 
-        private CSVFile CreateDoc()
+        private DataTable CreateDoc()
         {
             int columnsCount = 3;
             int rowsCount = 30;
-            CSVFile doc = new CSVFile();
-            Random rnd = new Random();
-
+            DataTable doc = new DataTable();     
             for (int i = 0; i < columnsCount; i++)
             {
                 doc.Columns.Add(new Column()
@@ -83,7 +81,6 @@ namespace IntegratedTestTheDeanHelpers
                     IsActive = true
                 });
             }
-
             for (int j = 0; j < rowsCount; j++)
             {
                 Row row = new Row()
@@ -103,7 +100,6 @@ namespace IntegratedTestTheDeanHelpers
                 }
                 doc.Rows.Add(row);
             }
-
             return doc;
         }
     }

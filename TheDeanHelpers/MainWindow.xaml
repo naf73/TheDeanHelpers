@@ -23,7 +23,7 @@
             <Button x:Name="ExportXLS" Content="Export XLS" Style="{StaticResource MainButton}" Click="ExportXLS_Click"/>
         </StackPanel>
 
-        <DataGrid x:Name="DataGrid" 
+        <DataGrid x:Name="DataGridTable" 
                           Grid.Row="1"
                           Margin="5"
                           SelectionUnit="CellOrRowHeader"
@@ -32,7 +32,8 @@
                           AutoGenerateColumns="True"
                           HorizontalGridLinesBrush="DarkGray" 
                           RowBackground="LightGray" 
-                          AlternatingRowBackground="White">            
+                          AlternatingRowBackground="White"
+                          ItemsSource="{Binding}">            
         </DataGrid>
 
     </Grid>
