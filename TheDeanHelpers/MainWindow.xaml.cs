@@ -59,30 +59,17 @@ namespace TheDeanHelpers
             if (openFileDialog.ShowDialog() == true)
             {
                 DataGridTable.DataContext = parser.Download(openFileDialog.FileName);
-                
-                foreach (DataGridColumn column in DataGridTable.Columns)
+
+                foreach(DataGridColumn column in DataGridTable.Columns)
                 {
-                    DataTemplate dataTemplate = new DataTemplate();
-
-                    FrameworkElementFactory _template = new FrameworkElementFactory(typeof(StackPanel));
-                    _template.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
-
-                    FrameworkElementFactory _firstTemplateChild = new FrameworkElementFactory(typeof(CheckBox));
-                    _firstTemplateChild.SetValue(CheckBox.IsThreeStateProperty, false);
-                    _firstTemplateChild.SetValue(CheckBox.IsCheckedProperty, true);
-                    _firstTemplateChild.SetValue(CheckBox.NameProperty, string.Format("checkBox_{0}", column.DisplayIndex));
-                    _firstTemplateChild.AddHandler(CheckBox.ClickEvent, new RoutedEventHandler(CheckBox_Click));
-
-                    FrameworkElementFactory _secondTemplateChild = new FrameworkElementFactory(typeof(Label));
-                    _secondTemplateChild.SetValue(Label.NameProperty, "label");
-                    _secondTemplateChild.SetValue(Label.ContentProperty, column.Header);
-                    _secondTemplateChild.AddHandler(Label.MouseDoubleClickEvent, new MouseButtonEventHandler(Header_Click));
-
-                    _template.AppendChild(_firstTemplateChild);
-                    _template.AppendChild(_secondTemplateChild);
-
-                    dataTemplate.VisualTree = _template;
-                    column.HeaderTemplate = dataTemplate;
+                    CheckBox checkBox = new CheckBox()
+                    {
+                        IsThreeState = false,
+                        Content = column.Header as string,
+                        Margin = new Thickness(5),
+                        IsChecked = true
+                    };
+                    column.Header = checkBox;                    
                 }
             }
         }
@@ -111,36 +98,28 @@ namespace TheDeanHelpers
             };
             if (saveFileDialog.ShowDialog() == true)
             {
-                DataTable table = new DataTable();
-                table = (DataTable)DataGridTable.DataContext;
+                DataTable table = (DataTable)DataGridTable.DataContext;
+
                 foreach (DataGridColumn column in DataGridTable.Columns)
                 {
-                    StackPanel stackPanel = column.HeaderTemplate.LoadContent() as StackPanel;
-                    CheckBox box = FindVisualChildByName<CheckBox>(stackPanel, string.Format("checkBox_{0}", column.DisplayIndex));
-                    Label label = FindVisualChildByName<Label>(stackPanel, "label");
-
-                    if (box.IsChecked == true)
-                    {
-                        MessageBox.Show(label.Content.ToString());
-                    }
-
-                    foreach (var item in stackPanel.Children)
-                    {
-                        if (item is CheckBox)
-                        {
-                            MessageBox.Show(string.Format("{0} {1}", ((CheckBox)item).Name, ((CheckBox)item).IsChecked));
-                            if (((CheckBox)item).IsChecked == false)
-                            {
-                                MessageBox.Show(column.Header.ToString());
-                            }
-                        }
-                    }
-
-                    // -- --
-
-                    table.Columns[(string)column.Header].SetOrdinal(column.DisplayIndex);
+                    CheckBox checkBox = column.Header as CheckBox;
+                    table.Columns[checkBox.Content.ToString()].SetOrdinal(column.DisplayIndex);
                 }
-                expoter.ExportToFileXLSX(saveFileDialog.FileName, table);
+
+                DataTable exportTable = new DataTable();
+                exportTable = table.Copy();
+
+                foreach (DataGridColumn column in DataGridTable.Columns)
+                {
+                    CheckBox checkBox = column.Header as CheckBox;
+                    if (checkBox.IsChecked == false)
+                    {
+                        exportTable.Columns.Remove(exportTable.Columns[checkBox.Content.ToString()]);
+                    }
+                }
+
+                expoter.ExportToFileXLSX(saveFileDialog.FileName, exportTable);
+
                 MessageBox.Show("Экпорт завершен");
             }
         }
@@ -148,27 +127,6 @@ namespace TheDeanHelpers
         #endregion
 
         #region Methods
-
-        public static T FindVisualChildByName<T>(DependencyObject parent, string name) where T : DependencyObject
-        {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
-            {
-                var child = VisualTreeHelper.GetChild(parent, i);
-                string controlName = child.GetValue(Control.NameProperty) as string;
-                if (controlName == name)
-                {
-                    return child as T;
-                }
-                else
-                {
-                    T result = FindVisualChildByName<T>(child, name);
-                    if (result != null)
-                        return result;
-                }
-            }
-            return null;
-        }
-
 
         #endregion
     }
