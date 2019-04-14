@@ -84,7 +84,20 @@ namespace TheDeanHelpers
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(((CheckBox)((ContextMenu)((MenuItem)sender).Parent).PlacementTarget).Content.ToString());
+            CheckBox checkBox = ((ContextMenu)((MenuItem)sender).Parent).PlacementTarget as CheckBox;
+            DataTable table = (DataTable)DataGridTable.DataContext;
+
+            DataColumn dataColumn = table.Columns[checkBox.Content.ToString()];
+
+            WindowRename windowRename = new WindowRename();                       
+            if(windowRename.ShowDialog() == true)
+            {
+                if (!string.IsNullOrEmpty(windowRename.Rename))
+                {
+                    checkBox.Content = windowRename.Rename;
+                    dataColumn.ColumnName = windowRename.Rename;
+                }
+            }
         }
 
         /// <summary>
@@ -131,5 +144,6 @@ namespace TheDeanHelpers
         #region Methods
 
         #endregion
+
     }
 }
