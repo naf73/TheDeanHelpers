@@ -4,10 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TheDeanHelpers.Model;
+using TheDeanHelpers;
 
 namespace TheDeanHelpers.Helpers
 {
+    /*
     public class Mock
     {
         public CSVFile CreateDoc()
@@ -49,4 +50,5 @@ namespace TheDeanHelpers.Helpers
             return doc;
         }
     }
+    */
 }

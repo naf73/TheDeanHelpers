@@ -169,7 +169,20 @@ namespace TheDeanHelpers
             return null;
         }
 
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            WindowRename passwordWindow = new WindowRename();
 
+            if (passwordWindow.ShowDialog() == true)
+            {
+                
+                    MessageBox.Show("Заголовок переименован");
+            }
+            else
+            {
+                MessageBox.Show("Загаловок непереименован");
+            }
+        }
         #endregion
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

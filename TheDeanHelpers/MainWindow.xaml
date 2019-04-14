@@ -36,5 +36,8 @@
                   CanUserSortColumns="False"
                   ItemsSource="{Binding}">
         </DataGrid>
+        <Grid>
+            <Button Width="100" Height="30" Content=" Переименовать" Click="Login_Click"  />
+        </Grid>
     </Grid>
 </Window>
