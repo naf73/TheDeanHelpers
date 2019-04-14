@@ -59,30 +59,32 @@ namespace TheDeanHelpers
             if (openFileDialog.ShowDialog() == true)
             {
                 DataGridTable.DataContext = parser.Download(openFileDialog.FileName);
+                ContextMenu contextMenu = new ContextMenu();
+                MenuItem Item = new MenuItem()
+                {
+                    Header = "Rename",
+                };
+                Item.Click += MenuItem_Click;
+                contextMenu.Items.Add(Item);
 
-                foreach(DataGridColumn column in DataGridTable.Columns)
+                foreach (DataGridColumn column in DataGridTable.Columns)
                 {
                     CheckBox checkBox = new CheckBox()
                     {
                         IsThreeState = false,
                         Content = column.Header as string,
                         Margin = new Thickness(5),
-                        IsChecked = true
+                        IsChecked = true,
+                        ContextMenu = contextMenu
                     };
                     column.Header = checkBox;                    
                 }
             }
         }
 
-        private void CheckBox_Click(object sender, RoutedEventArgs e)
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            CheckBox checkBox = (CheckBox)sender;
-            MessageBox.Show(checkBox.IsChecked.ToString());
-        }
-
-        private void Header_Click(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show(((Label)sender).Content.ToString());
+            MessageBox.Show(((CheckBox)((ContextMenu)((MenuItem)sender).Parent).PlacementTarget).Content.ToString());
         }
 
         /// <summary>
