@@ -49,11 +49,20 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="UnitTestCSVFile.cs" />
+    <Compile Include="UnitTestColumn.cs" />
+    <Compile Include="UnitTestRow.cs" />
+    <Compile Include="UnitTestCell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TheDeanHelpers\TheDeanHelpers.csproj">
+      <Project>{A2A6356A-92C0-42F1-ABE3-1A9480FA94E4}</Project>
+      <Name>TheDeanHelpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

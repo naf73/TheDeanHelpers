@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TheDeanHelpers;
 using TheDeanHelpers.Model;
 
 namespace IntegratedTestTheDeanHelpers
@@ -10,15 +12,38 @@ namespace IntegratedTestTheDeanHelpers
         [TestMethod]
         public void TestMethodExportToFileXLSX()
         {
+            #region Arrange
 
+            string pathFile = Path.Combine(Path.GetTempPath(), "test.xlsx");
+            DataTable doc = CreateDoc();
+            Expoter expoter = new Expoter();
 
+            #endregion
+
+            #region Action
+
+            expoter.ExportToFileXLSX(pathFile, doc);
+
+            #endregion
+
+            #region Output
+
+            Console.WriteLine(pathFile);
+
+            #endregion
+
+            #region Post
+
+            //if (File.Exists(pathFile)) File.Delete(pathFile);
+
+            #endregion
         }
 
-        private CSVFile CreateDoc()
+        private DataTable CreateDoc()
         {
             int columnsCount = 3;
-            int rowsCount = 10;
-            CSVFile doc = new CSVFile();
+            int rowsCount = 30;
+            DataTable doc = new DataTable();
             Random rnd = new Random();
 
             for (int i = 0; i < columnsCount; i++)
@@ -46,6 +71,7 @@ namespace IntegratedTestTheDeanHelpers
                         RowId = j,
                         Value = string.Format("Значение ({0} {1})", i, j)
                     });
+                    i++;
                 }
                 doc.Rows.Add(row);
             }

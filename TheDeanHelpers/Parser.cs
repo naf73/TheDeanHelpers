@@ -1,71 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TheDeanHelpers.Model;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace TheDeanHelpers
 {
     public  class Parser
     {
-        public CSVFile Download (string filePath )
+        public DataTable Download(string filePath)
         {
             if (!File.Exists(filePath))throw new FileNotFoundException();
             using (var reader = new StreamReader(filePath, Encoding.Default))
             {
                 string line;
                 bool firstLine = true;
-                CSVFile doc = new CSVFile();
-                int countRow = 0;
+                DataTable doc = new DataTable();
                 while ((line = reader.ReadLine()) != null)
                 {
                     if (firstLine)
                     {
-                        int countColumns = 0;
                         foreach (var word in line.Split(';'))
                         {
-
-                            doc.Columns.Add(new Column()
+                            doc.Columns.Add(new DataColumn
                             {
-                                Id = countColumns++,
-                                Name = word,
-                                IsActive = true
+                                ColumnName = word
                             });
                         }
                         firstLine = false;
                     }
                     else
                     {
-                        Row r = new Row()
-                        {
-                            Id = countRow
-                        };
-                        int countWord = 0;                        
+                        List<string> words = new List<string>();
                         foreach (var word in line.Split(';'))
                         {
-
-                            r.Cells.Add(new Cell()
-                            {
-                                ColumnId = countWord,
-                                RowId = countRow,
-                                Value=word
-                            });
-                            countWord++;
+                            words.Add(word);
                         }
-                        doc.Rows.Add(r);
-                        countRow++;
+                        doc.Rows.Add(words.ToArray());
                     }
                 }
                 return doc;
-            }
-            
-            
-            
-        }
-
-
-        
+            }         
+        } 
     }
 }

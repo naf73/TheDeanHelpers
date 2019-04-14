@@ -6,15 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TheDeanHelpers.Model;
-using SheetRow = DocumentFormat.OpenXml.Spreadsheet.Row;
-using CSVRow = TheDeanHelpers.Model.Row;
+using System.Data;
 
 namespace TheDeanHelpers
 {
     public class Expoter
     {
-        public void ExportToFileXLSX(string pathFile, CSVFile doc)
+        public void ExportToFileXLSX(string pathFile, System.Data.DataTable doc)
         {
             using (SpreadsheetDocument document = SpreadsheetDocument.Create(pathFile, SpreadsheetDocumentType.Workbook))
             {
@@ -26,35 +24,44 @@ namespace TheDeanHelpers
 
                 Sheets sheets = workbookPart.Workbook.AppendChild(new Sheets());
 
-                Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Sheet" };
+                Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Sheet_1" };
 
                 sheets.Append(sheet);
 
                 SheetData sheetData = worksheetPart.Worksheet.AppendChild(new SheetData());
 
                 worksheetPart.Worksheet.Save();
+                
+                #region Columns
 
-                #region Заголовок
+                Row Headers = new Row();
 
-                SheetRow rangeDates = new SheetRow();
-
-                foreach (var column in doc.Columns)
+                foreach (DataColumn column in doc.Columns)
                 {
-                    rangeDates.Append(ConstructCell(column.Name, CellValues.String));
+                    Headers.Append(ConstructCell(column.ColumnName, CellValues.String));
                 }
-                sheetData.AppendChild(rangeDates);               
+                sheetData.AppendChild(Headers);               
 
                 #endregion
 
-                #region Customers
+                #region Rows
 
-                foreach (var row in doc.Rows)
+                foreach (DataRow row in doc.Rows)
                 {
-                    SheetRow sheetRow = new SheetRow();
+                    Row sheetRow = new Row();
 
-                    //sheetRow.Append(ConstructCell(row.Cells[], CellValues.Number));
+                    foreach(string value in row.ItemArray)
+                    {
+                        if (!string.IsNullOrEmpty(value))
+                        {
+                            sheetRow.Append(ConstructCell(value, CellValues.String));
+                        }
+                    }
 
-                    sheetData.Append(sheetRow);
+                    if (sheetRow.Count() > 0)
+                    {
+                        sheetData.Append(sheetRow);
+                    }
                 }
 
                 #endregion

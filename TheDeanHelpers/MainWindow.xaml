@@ -23,17 +23,18 @@
             <Button x:Name="ExportXLS" Content="Export XLS" Style="{StaticResource MainButton}" Click="ExportXLS_Click"/>
         </StackPanel>
 
-        <DataGrid x:Name="DataGrid" 
-                          Grid.Row="1"
-                          Margin="5"
-                          SelectionUnit="CellOrRowHeader"
-                          SelectionMode="Extended"
-                          Background="{x:Null}"
-                          AutoGenerateColumns="True"
-                          HorizontalGridLinesBrush="DarkGray" 
-                          RowBackground="LightGray" 
-                          AlternatingRowBackground="White" SelectionChanged="DataGrid_SelectionChanged">            
+        <DataGrid x:Name="DataGridTable" 
+                  Grid.Row="1"
+                  Margin="5"
+                  SelectionUnit="CellOrRowHeader"
+                  SelectionMode="Extended"
+                  Background="{x:Null}"
+                  AutoGenerateColumns="True"
+                  HorizontalGridLinesBrush="DarkGray" 
+                  RowBackground="LightGray" 
+                  AlternatingRowBackground="White"
+                  CanUserSortColumns="False"
+                  ItemsSource="{Binding}">
         </DataGrid>
-
     </Grid>
 </Window>

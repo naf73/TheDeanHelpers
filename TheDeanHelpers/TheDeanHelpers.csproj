@@ -74,10 +74,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Cell.cs" />
-    <Compile Include="Model\Column.cs" />
-    <Compile Include="Model\CSVFile.cs" />
-    <Compile Include="Model\Row.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
