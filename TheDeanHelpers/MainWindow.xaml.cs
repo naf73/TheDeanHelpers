@@ -69,13 +69,16 @@ namespace TheDeanHelpers
 
                 foreach (DataGridColumn column in DataGridTable.Columns)
                 {
+                    DataTable table = (DataTable)DataGridTable.DataContext;
+                    DataColumn dataColumn = table.Columns[(string)column.Header];
                     CheckBox checkBox = new CheckBox()
                     {
                         IsThreeState = false,
-                        Content = column.Header as string,
+                        Content = dataColumn.Caption,
                         Margin = new Thickness(5),
                         IsChecked = true,
-                        ContextMenu = contextMenu
+                        ContextMenu = contextMenu,
+                        Tag = dataColumn.ColumnName
                     };
                     column.Header = checkBox;                    
                 }
@@ -85,9 +88,6 @@ namespace TheDeanHelpers
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = ((ContextMenu)((MenuItem)sender).Parent).PlacementTarget as CheckBox;
-            DataTable table = (DataTable)DataGridTable.DataContext;
-
-            DataColumn dataColumn = table.Columns[checkBox.Content.ToString()];
 
             WindowRename windowRename = new WindowRename();                       
             if(windowRename.ShowDialog() == true)
@@ -95,7 +95,6 @@ namespace TheDeanHelpers
                 if (!string.IsNullOrEmpty(windowRename.Rename))
                 {
                     checkBox.Content = windowRename.Rename;
-                    dataColumn.ColumnName = windowRename.Rename;
                 }
             }
         }
@@ -113,29 +112,33 @@ namespace TheDeanHelpers
             };
             if (saveFileDialog.ShowDialog() == true)
             {
-                DataTable table = (DataTable)DataGridTable.DataContext;
-
-                foreach (DataGridColumn column in DataGridTable.Columns)
+                using (DataTable table = (DataTable)DataGridTable.DataContext)
                 {
-                    CheckBox checkBox = column.Header as CheckBox;
-                    table.Columns[checkBox.Content.ToString()].SetOrdinal(column.DisplayIndex);
-                }
-
-                DataTable exportTable = new DataTable();
-                exportTable = table.Copy();
-
-                foreach (DataGridColumn column in DataGridTable.Columns)
-                {
-                    CheckBox checkBox = column.Header as CheckBox;
-                    if (checkBox.IsChecked == false)
+                    foreach (DataGridColumn column in DataGridTable.Columns)
                     {
-                        exportTable.Columns.Remove(exportTable.Columns[checkBox.Content.ToString()]);
+                        CheckBox checkBox = column.Header as CheckBox;
+                        
+                        table.Columns[(string)checkBox.Tag].SetOrdinal(column.DisplayIndex);
+                        table.Columns[(string)checkBox.Tag].Caption = checkBox.Content.ToString();
                     }
+
+                    DataTable exportTable = new DataTable();
+                    exportTable = table.Copy();
+
+                    foreach (DataGridColumn column in DataGridTable.Columns)
+                    {
+                        CheckBox checkBox = column.Header as CheckBox;
+                        if (checkBox.IsChecked == false)
+                        {
+                            exportTable.Columns.Remove(exportTable.Columns[(string)checkBox.Tag]);
+                        }
+                    }
+
+                    expoter.ExportToFileXLSX(saveFileDialog.FileName, exportTable);
+
+                    MessageBox.Show("Экпорт завершен");
                 }
 
-                expoter.ExportToFileXLSX(saveFileDialog.FileName, exportTable);
-
-                MessageBox.Show("Экпорт завершен");
             }
         }
 
@@ -144,6 +147,5 @@ namespace TheDeanHelpers
         #region Methods
 
         #endregion
-
     }
 }

@@ -24,12 +24,15 @@ namespace TheDeanHelpers
                 {
                     if (firstLine)
                     {
+                        int index = 0;
                         foreach (var word in line.Split(';'))
                         {
                             doc.Columns.Add(new DataColumn
                             {
-                                ColumnName = word
+                                ColumnName = string.Format("Column_{0}", index),
+                                Caption = word
                             });
+                            index++;
                         }
                         firstLine = false;
                     }

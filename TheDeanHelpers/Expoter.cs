@@ -38,7 +38,7 @@ namespace TheDeanHelpers
 
                 foreach (DataColumn column in doc.Columns)
                 {
-                    Headers.Append(ConstructCell(column.ColumnName, CellValues.String));
+                    Headers.Append(ConstructCell(column.Caption, CellValues.String));
                 }
                 sheetData.AppendChild(Headers);               
 

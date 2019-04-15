@@ -26,15 +26,16 @@
         <DataGrid x:Name="DataGridTable" 
                   Grid.Row="1"
                   Margin="5"
-                  SelectionUnit="CellOrRowHeader"
-                  SelectionMode="Extended"
+                  SelectionUnit="FullRow"
+                  SelectionMode="Single"
                   Background="{x:Null}"
                   AutoGenerateColumns="True"
                   HorizontalGridLinesBrush="DarkGray" 
                   RowBackground="LightGray" 
                   AlternatingRowBackground="White"
                   CanUserSortColumns="False"
-                  ItemsSource="{Binding}">
+                  ItemsSource="{Binding}"
+                  IsReadOnly="True">
         </DataGrid>
     </Grid>
 </Window>
