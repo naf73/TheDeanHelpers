@@ -28,6 +28,7 @@ namespace TheDeanHelpers
 
         Parser parser = new Parser();
         Expoter expoter = new Expoter();
+        string PathFile = string.Empty;
 
         #endregion
 
@@ -58,7 +59,8 @@ namespace TheDeanHelpers
             };
             if (openFileDialog.ShowDialog() == true)
             {
-                DataGridTable.DataContext = parser.Download(openFileDialog.FileName);
+                PathFile = openFileDialog.FileName;
+                DataGridTable.DataContext = parser.Preview(PathFile);
                 ContextMenu contextMenu = new ContextMenu();
                 MenuItem Item = new MenuItem()
                 {
@@ -71,16 +73,26 @@ namespace TheDeanHelpers
                 {
                     DataTable table = (DataTable)DataGridTable.DataContext;
                     DataColumn dataColumn = table.Columns[(string)column.Header];
+                    StackPanel panel = new StackPanel()
+                    {
+                        Orientation = Orientation.Horizontal
+                    };
                     CheckBox checkBox = new CheckBox()
                     {
-                        IsThreeState = false,
-                        Content = dataColumn.Caption,
+                        IsThreeState = false,                        
                         Margin = new Thickness(5),
                         IsChecked = true,
                         ContextMenu = contextMenu,
                         Tag = dataColumn.ColumnName
                     };
-                    column.Header = checkBox;                    
+                    panel.Children.Add(checkBox);
+                    Label label = new Label()
+                    {
+                        Content = dataColumn.Caption
+                    };
+                    panel.Children.Add(label);
+                    column.Header = panel; 
+                    
                 }
             }
         }
@@ -112,14 +124,15 @@ namespace TheDeanHelpers
             };
             if (saveFileDialog.ShowDialog() == true)
             {
-                using (DataTable table = (DataTable)DataGridTable.DataContext)
+                using (DataTable table = parser.Download(PathFile))
                 {
                     foreach (DataGridColumn column in DataGridTable.Columns)
                     {
-                        CheckBox checkBox = column.Header as CheckBox;
-                        
+                        CheckBox checkBox = ((StackPanel)column.Header).Children[0] as CheckBox;
+                        Label label= ((StackPanel)column.Header).Children[1] as Label;
+
                         table.Columns[(string)checkBox.Tag].SetOrdinal(column.DisplayIndex);
-                        table.Columns[(string)checkBox.Tag].Caption = checkBox.Content.ToString();
+                        table.Columns[(string)checkBox.Tag].Caption = label.Content.ToString();
                     }
 
                     DataTable exportTable = new DataTable();
@@ -127,7 +140,7 @@ namespace TheDeanHelpers
 
                     foreach (DataGridColumn column in DataGridTable.Columns)
                     {
-                        CheckBox checkBox = column.Header as CheckBox;
+                        CheckBox checkBox = ((StackPanel)column.Header).Children[0] as CheckBox;
                         if (checkBox.IsChecked == false)
                         {
                             exportTable.Columns.Remove(exportTable.Columns[(string)checkBox.Tag]);
